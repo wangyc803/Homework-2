@@ -16,10 +16,12 @@ tokens = ["tokenA", "tokenB", "tokenC", "tokenD", "tokenE"]
 
 def trade(liquidity, amount, X1, X2):
     amount_X1, amount_X2 = liquidity[X1][X2]
+    #print(amount, " ")
     amount_aX2 = amount_X1 * amount_X2 / (amount_X1 + amount)
-    liquidity[X1][X2]= (amount_X1 + amount, amount_aX2)
-    liquidity[X2][X1]= (amount_aX2, amount_X1 + amount)
+    liquidity[X1][X2] = (amount_X1 + amount, amount_aX2)
+    liquidity[X2][X1] = (amount_aX2, amount_X1 + amount)
     amount = amount_X2 - amount_aX2
+    #print(amount, ",")
     return amount
 
 def checkArbitrage(liquidity, tokens, base_Token):
@@ -43,7 +45,7 @@ def checkArbitrage(liquidity, tokens, base_Token):
                 E_before = M0 * M_2 / (M_2 * 0.997 + X2)
                 E_after = 0.997 * X2 * M_0 / (M_2 * 0.997 + X2)
                 amount = (E_before * E_after * 0.997)**0.5 - E_before
-                if E_after>E_before and amount >1:
+                if E_after > E_before and amount > 1:
                     return (i, j, k, amount)
         if i == base_Token:
             continue
@@ -70,6 +72,7 @@ def arbitrage(liquidity, amount, base_Token, X1, X2, X3):
         return amount
     amount = trade(liquidity, amount, X2, X3)
     amount = trade(liquidity, amount, X3, base_Token)
+    #print(amount, "haha")
     return amount
 
 def Arbitrage(graph, start):
@@ -100,6 +103,7 @@ def Arbitrage(graph, start):
             initial_token -= amount
             amount = arbitrage(liquidity, amount, base_Token, X1, X2, -1)
             initial_token += amount
+        #print(initial_token, "h")
     return initial_token, path
     
 
