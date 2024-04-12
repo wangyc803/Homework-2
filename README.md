@@ -12,9 +12,10 @@ What is slippage in AMM, and how does Uniswap V2 address this issue? Please illu
 
 > In AMMs like Uniswap, slippage refers to the difference between the expected price of a trade and the actual executed price. This difference occurs because when traders trade many times, the market price will change each time. As a result, larger trades can cause the price to move against the trader due to the depletion or increase of liquidity in the pool.
 Uniswap V2 addresses the slippage issue through the introduction of the x * y = k formula, where x and y represent the quantities of two tokens in a liquidity pool, and k is a constant value. This formula is also known as the constant product invariant.
-The below function implements the constant-product method V2 address uses: 
 
-def constant_product(x_init, y_init, x_in, k):
+>The below function implements the constant-product method V2 address uses: 
+
+>def constant_product(x_init, y_init, x_in, k):
     /*Args:
         x (float): Quantity of token X in the liquidity pool.
         y (float): Quantity of token Y in the liquidity pool.
@@ -30,6 +31,7 @@ def constant_product(x_init, y_init, x_in, k):
 Please examine the mint function in the UniswapV2Pair contract. Upon initial liquidity minting, a minimum liquidity is subtracted. What is the rationale behind this design?
 
 > By imposing a minimum liquidity requirement, the protocol can avoid "dust" transactions, which are extremely small liquidity positions that could clutter the liquidity pool without providing significant benefits. These dust transactions could potentially lead to inefficiencies in the system, such as increased gas costs for processing and maintaining these tiny positions.
+
 
 ## Problem 4
 Investigate the minting function in the UniswapV2Pair contract. When depositing tokens (not for the first time), liquidity can only be obtained using a specific formula. What is the intention behind this?
